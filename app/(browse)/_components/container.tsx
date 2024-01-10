@@ -15,7 +15,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
     }
   }, [lgScreen, onExpand, onCollapse]);
   return (
-    <div className={cn("flex", collapsed ? "ml-14" : "ml-14 lg:ml-60")}>
+    <div className={cn("flex-1", collapsed ? "ml-14" : "ml-14 lg:ml-60")}>
       {children}
     </div>
   );
