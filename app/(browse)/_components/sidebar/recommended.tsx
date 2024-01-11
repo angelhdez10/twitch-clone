@@ -9,8 +9,9 @@ interface RecommendedProps {
 
 const Recommended = ({ data }: RecommendedProps) => {
   const { collapsed } = useSideBar((state) => state);
-  console.log(data);
-
+  if (!data?.length) {
+    return null;
+  }
   return (
     <div className="">
       {!collapsed && data.length > 0 && (
@@ -18,23 +19,17 @@ const Recommended = ({ data }: RecommendedProps) => {
           <p className="text-muted-foreground text-semibold">Recommended</p>
         </div>
       )}
-      <ul className="">
-        {data.length ? (
-          data.map((u) => {
-            return (
-              <UserItem
-                key={u.id}
-                username={u.username}
-                imageUrl={u.imageUrl}
-                isLive={false}
-              />
-            );
-          })
-        ) : (
-          <p className="text-center">
-            Subscribe to Channels for recommendations
-          </p>
-        )}
+      <ul className="px-2">
+        {data.map((u) => {
+          return (
+            <UserItem
+              key={u.id}
+              username={u.username}
+              imageUrl={u.imageUrl}
+              isLive={false}
+            />
+          );
+        })}
       </ul>
     </div>
   );

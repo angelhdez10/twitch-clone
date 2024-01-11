@@ -13,11 +13,34 @@ export const getRecommendedService = async () => {
       externalUserId: "",
     };
   }
+  console.log(self);
   const result = await db.user.findMany({
     where: {
-      NOT: {
-        externalUserId: self?.externalUserId,
-      },
+      AND: [
+        {
+          NOT: {
+            externalUserId: self?.externalUserId,
+          },
+        },
+        {
+          NOT: {
+            followed: {
+              some: {
+                followerId: self?.id || "",
+              },
+            },
+          },
+        },
+        {
+          NOT: {
+            blocking: {
+              some: {
+                blockedId: self?.id || "",
+              },
+            },
+          },
+        },
+      ],
     },
     orderBy: {
       createdAt: "desc",
